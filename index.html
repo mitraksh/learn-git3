@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShoppingList</title>
+    <!-- UIkit CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/css/uikit.min.css" />
+
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit-icons.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<style>
+
+body {
+    padding: 2%;
+    background-color:#e0dcf2;
+  }
+  
+  h2, h4 {
+    font-family: 'Nunito', sans-serif;
+  }
+ 
+  </style>
+
+<div >
+      <form id="shopping-list" class="uk-background-blend-color">
+
+        <h4>Add new item</h4>
+      <div>
+                    <div class="uk-margin">
+                      Quantity
+                      <input class="uk-input uk-form-width-medium uk-form-small" type="number" v-model="quantity" class="checkbox" placeholder="Enter a number" autofocus>
+                    </div>
+                    <div class="uk-margin">
+                      Name
+                      <input class="uk-input uk-form-width-medium uk-form-small" type="text" v-model="itemName" class="checkbox">
+                    </div>
+        
+                    <button type="button" @click="addItem"  class="uk-button uk-button-primary" > Add </button>
+                    </div>
+
+
+        <h2>Shopping List</h2>
+      <table class="uk-table uk-table-middle">
+        <thead>
+           <tr>
+             <th>Quantity</th>
+             <th>Item</th>
+             <th>Actions</th>
+           </tr>
+        </thead>
+        <tr v-for="(item, index) in itemsList">
+          <td>
+            <span v-show="!item.inEditMode">{{ item.quantity }}</span>
+            <input type="number" v-bind:placeholder="item.quantity" v-show="item.inEditMode" v-model="item.quantity" /> 
+          </td>
+          <td>
+            <span v-show="!item.inEditMode">{{ item.itemName }}</span>
+            <input v-bind:placeholder="item.itemName" v-show="item.inEditMode" v-model="item.itemName" />
+          </td>
+          <td>
+            <button type="button"  class="uk-button uk-button-secondary"  v-show="item.inEditMode" @click="editItemComplete(item)"> Save  </button>
+            <button type="button"  class="uk-button uk-button-default" v-show="!item.inEditMode" @click="editItem(item)"> Edit  </button>
+            <button type="button"  class="uk-button uk-button-danger" @click="removeItem(index)"> Delete  </button>
+          </td>
+        </tr>
+      </table>
+        
+      </form>
+</div>
+
+      <script>
+          var vm = new Vue({
+              el: '#shopping-list',
+              data: {
+                  quantity: '',
+                  itemName: '',
+                  itemsList: [ 
+                    {
+                      quantity: 3,
+                      itemName: "Apples",
+                      inEditMode: false
+                    },
+                    {
+                      quantity: 6,
+                      itemName: "Pears",
+                      inEditMode: false
+                      
+                    }],
+                  inEditMode: false
+              },
+              methods: {
+                  addItem: function (){
+                      var quantityIN = this.quantity;
+                      var itemNameIN = this.itemName.trim();
+                      this.itemsList.push({ 
+                        quantity: quantityIN,
+                        itemName: itemNameIN,
+                        inEditMode: false
+                      });
+                      this.clearAll();
+                  },
+                  clearQuantity: function () {
+                      this.quantity = '';
+                  },
+                  clearItemName: function () {
+                      this.itemName = '';
+                  },
+                  clearAll: function () {
+                    this.clearQuantity();
+                    this.clearItemName();
+                  },
+                  removeItem: function (index){
+                      this.itemsList.splice(index, 1); //delete 1 element from the array at the position index
+                  },
+                  editItem:function (item){
+                      item.inEditMode = true;
+                  },
+                  editItemComplete: function (item) {
+                      item.inEditMode = false;
+                  }
+              }
+          });
+      </script>
+</body>
+</html>
