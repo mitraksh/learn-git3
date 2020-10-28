@@ -90,15 +90,14 @@
             cart: [],
             showProduct: true,
             },
-            methods: {
-                addToCart() {
-                    this.cart.push(this.product.id);
-                    // console.log(this.cart)
+            
+            computed: {
+                cartItemCount() {
+                    return this.cart.length ;
                 },
-                showCheckout() {
-                    // console.log(this.showProduct);
-                    this.showProduct = this.showProduct ? false : true;
-                },
+                canAddToCart() {
+                    return this.product.availableInventory > this.cartItemCount;
+                }
             },
             
         });
