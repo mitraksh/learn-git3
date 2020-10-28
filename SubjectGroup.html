@@ -20,7 +20,98 @@
         </header>
         <main>
             <h2>Subject</h2>
+            <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>ShoppingList</title>
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/css/uikit.min.css" />
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit-icons.min.js"></script>
+    <title>Pet Depot</title>
+</head>
+<body>
+    <div id="app" class="uk-container uk-container-expand">
+        <header>
+            <h1 v-text="sitename"></h1>
+        </header>
+        <main>
+            <h2>Subject</h2>
+            <button class="uk-button uk-button-secondary" v-on: click="showCheckout">
+                {{cartItemCount}}
+
+                <span class="fas fa-cart-plus"></span>
+                Checkout
+              </button>
+            <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
+                <div class="uk-card-media-left uk-cover-container">
+                    <figure>
+                        <img v-bind:src="product.image" alt="chemistry image" uk-cover />
+                    </figure>
+                    <canvas width="600" height="200"></canvas>
+                </div>
+                <div>
+                    <div class="uk-card-body">
+                        <h3 class="uk-card-title" v-text="product.subject"></h3>
+                        <img src="loc.png" width="40" height="40"> <p v-html="product.location"></p>
+                        <p>Price: £{{product.price}}</p>
+                        <p>Number of Spaces Available: {{product.availableInventory - cartItemCount}}</p>
+                        
+                    </div>
+                </div>
+            </div>
+
             
+
+            
+            
+        </main>
+    </div>
+
+    <script>
+        var webstore = new Vue({
+            el: '#app',
+            data: {
+                sitename: 'After School Club',
+                product: {
+                    id: 1001,
+                    subject: 'Chemistry',
+                    location: 'London',
+                    price: 100,
+                    image: 'chem.jpeg', 
+                    availableInventory: '5'
+                },
+            cart: [],
+            showProduct: true,
+            },
+            methods: {
+                addToCart() {
+                    this.cart.push(this.product.id);
+                    // console.log(this.cart)
+                },
+                showCheckout() {
+                    // console.log(this.showProduct);
+                    this.showProduct = this.showProduct ? false : true;
+                },
+            },
+            computed: {
+                cartItemCount() {
+                    return this.cart.length ;
+                },
+                canAddToCart() {
+                    return this.product.availableInventory > this.cartItemCount;
+                }
+            },
+            
+        });
+    </script>
+</body>
+</html>
             <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
                 <div class="uk-card-media-left uk-cover-container">
                     <figure>
