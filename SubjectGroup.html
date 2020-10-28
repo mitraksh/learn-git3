@@ -42,12 +42,7 @@
         </header>
         <main>
             <h2>Subject</h2>
-            <button class="uk-button uk-button-secondary" v-on: click="showCheckout">
-                {{cartItemCount}}
-
-                <span class="fas fa-cart-plus"></span>
-                Checkout
-              </button>
+            
             <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
                 <div class="uk-card-media-left uk-cover-container">
                     <figure>
@@ -60,9 +55,7 @@
                         <h3 class="uk-card-title" v-text="product.subject"></h3>
                         <img src="loc.png" width="40" height="40"> <p v-html="product.location"></p>
                         <p>Price: £{{product.price}}</p>
-                        <p>Number of Spaces Available: {{product.availableInventory - cartItemCount}}</p>
-                        <button class="uk-button uk-button-primary" v-on:click="addToCart" v-if="canAddToCart"> Add to cart </button>
-                        <button  class="uk-button uk-button-default" disabled="disabled" v-else>Add to Cart</button>
+
                     </div>
                 </div>
             </div>
@@ -87,18 +80,7 @@
                     image: 'chem.jpeg', 
                     availableInventory: '5'
                 },
-            cart: [],
-            showProduct: true,
-            },
             
-            computed: {
-                cartItemCount() {
-                    return this.cart.length ;
-                },
-                canAddToCart() {
-                    return this.product.availableInventory > this.cartItemCount;
-                }
-            },
             
         });
     </script>
