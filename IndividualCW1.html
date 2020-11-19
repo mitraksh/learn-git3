@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>After School Activities</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="lessons.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <!-- UIkit CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/css/uikit.min.css" />
+
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit-icons.min.js"></script>
+
+</head>
+<body>
+</header>
+<main>
+    <div id="app">
+    <div v-if='showProduct'>
+        <div v-for="product in products">
+                  
+
+
+            <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
+              <div class="uk-card-media-left uk-cover-container">
+                  <img v-bind:src="product.image" alt="" uk-cover>
+                  <canvas width="600" height="400"></canvas>
+              </div>
+              <div>
+                  <div class="uk-card-body">
+                    <h3 class="uk-card-title" v-text="product.subject"></h3>
+                    <p class="card-text">Location: {{product.location}}</p>
+                    <p class="card-text">Price: £{{product.price}}</p>
+                    <p class="card-text">Available Seats: {{product.availableInventory - cartCount(product)}}</p>
+
+                    <button v-on:click='addToCart(product)' v-if='canAddToCart(product)' class="btn btn-primary">Add to cart</button>
+
+                    <button disabled="disabled" v-else class="btn btn-disabled">Add to cart</button>
+          
+                    <span v-if='product.availableInventory === cartCount(product)'>All out!</span>
+                    <span v-else-if="product.availableInventory - cartCount(product) < 5">
+                                Only {{product.availableInventory - cartCount(product)}} left!
+                    </span>
+                    <span v-else>Buy now!</span>
+                    <div>
+                      <span v-for='n in product.rating'>★</span>
+                      <span v-for='n in 5-product.rating'>☆</span>
+                      </div>
+
+   
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript">
+        var webstore = new Vue({
+            el: '#app',
+            data: {
+                sitename: 'After School Activities',
+                products: products,
+                cart: [],
+                showProduct: true,
+                picked:'',
+                order: {
+                    fullName: '',
+                    phoneNumber: '',
+                    method: 'Home',
+                    gift: 'Send as a gift',
+                    sendGift: 'Send as a gift',
+                    dontSendGift: 'Do not send as a gift',
+                },
+               
+                
+            },
+            // created: function () {
+            //     this.products = allProducts
+            // },
+            methods: {
+              addToCart(product) {
+                  product.quantity -= 1
+                  this.cart.push(product);
+                  // console.log('adding to cart', product.id)
+                },
+                
+               
+            },
+            
+            computed: {
+                cartItemCount() {
+                    return this.cart.length;
+                },
+                // canAddToCart(product) {
+                //     return product.availableInventory > this.cartItemCount;
+                // }
+                
+                
+            },
+        });
+    </script>
+ 
+</body>
+</html>
