@@ -27,7 +27,7 @@
            
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             </div>
-            
+
             <button v-on:click='showCheckout' class="btn btn-outline-success my-2 my-sm-0">
                 {{cartItemCount}}
                 <span class="fas fa-shopping-cart"></span> Checkout
@@ -74,6 +74,64 @@
     <div v-else>
         <h2>Checkout</h2>
 
+        <form>
+
+
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text border border-primary">Full Name</span>
+              </div>
+              <input v-model.trim="order.fullName"  type="text" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123 || event.charCode == 32)" placeholder="Your Full Name" class="form-control border border-info" required minlength="3" maxlength="30">              </div>
+
+            
+             
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text border border-info">Phone Number:</span>
+              </div>
+              <input id="mobile" v-model.number="order.phoneNumber" pattern="^\d{10}$" title="Only 10 Digits are allowed" @keypress="onlyNumbers" type="tel" placeholder="Your Phone Number (Only 10 digits are allowed)" class="form-control border border-success" required>
+              <span class="input-group-text border border-info">Only 10 digits are allowed</span>
+            </div>   
+
+
+            
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                  <span class="input-group-text border border-success"> <input type="checkbox" id="gift" value="true" v-model="order.gift" v-bind:true-value="order.sendGift"
+                  v-bind:false-value="order.dontSendGift"> </span>
+                  <span class="input-group-text border border-primary" for="gift">Ship As Gift?</span>
+                </div>
+              </div>
+            
+           
+            
+          
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text border border-info"> <input type="radio" id="home" value="Home" v-model="order.method" > </span>
+                <span class="input-group-text border border-primary">Home</span>
+                <span class="input-group-text border border-info"> <input type="radio" id="business" value="Business" v-model="order.method"> </span>
+                <span class="input-group-text border border-primary"> Business</span>
+              </div>
+             
+            </div>
+
+
+          <h2>Order Information</h2>
+          <p class="input-group-text border border-primary">Full Name: {{order.fullName}}</p>
+          <p class="input-group-text border border-info">Phone Number: {{order.phoneNumber}}</p>
+          <p class="input-group-text border border-success">Gift? {{order.gift}}</p>
+          <p class="input-group-text border border-warning">Method: {{order.method}}</p>
+          <p class="input-group-text border border-primary">Your Total: £{{total}}</p> </br>
+
+          
+           
+          <button class="btn btn-success" v-if="order.fulName!= '' && order.phoneNumber!= '' " type="submit" v-on:click="submitForm(order)">Place Order</button>
+            
+            
+      </form>
+
+ 
     </div>
 
 
@@ -86,7 +144,14 @@
                 products: products,
                 cart: [],
                 showProduct: true,
-               
+                order: {
+                    fullName: '',
+                    phoneNumber: '',
+                    method: 'Home',
+                    gift: 'Send as a gift',
+                    sendGift: 'Send as a gift',
+                    dontSendGift: 'Do not send as a gift',
+                },
                
                 
             },
@@ -103,6 +168,7 @@
                     // console.log(this.showProduct);
                     this.showProduct = this.showProduct ? false : true;
                 },
+                
                 
                
             },
