@@ -51,6 +51,39 @@
 
         </nav>
     <div v-if='showProduct'>
+        <h3 class="text-info">Filter</h3>
+            <div class="form-check">
+            <input class="form-check-input" type="radio" value="subjectAsc" name="subjectAsc" v-model="picked">
+            <label for="Radio">Sort A-Z Subject</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" value="subjectDesc" name="subjectDesc" v-model="picked">
+              <label for="Radio">Sort Z-A Subject</label>
+              </div>
+            <div class="form-check">
+            <input class="form-check-input" type="radio" value="priceAsc" name="priceAsc" v-model="picked">
+            <label for="priceRadio">Sort Price Low to High</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" value="priceDesc" name="priceDesc" v-model="picked">
+              <label for="priceRadio">Sort Price High to Low</label>
+              </div>
+            <div class="form-check">
+            <input class="form-check-input" type="radio" value="locationAsc" name="locationAsc" v-model="picked">
+            <label for="locationRadio">Sort A-Z Location</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" value="locationDesc" name="locationDesc" v-model="picked">
+              <label for="locationRadio">Sort Z-A Location</label>
+              </div>
+            <div class="form-check">
+            <input class="form-check-input" type="radio" value="availableInventoryAsc" name="availableInventoryAsc" v-model="picked">
+            <label for="spacesRadio">Sort Space By Low-High</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" value="availableInventoryDesc" name="availableInventoryDesc" v-model="picked">
+              <label for="spacesRadio">Sort Space By High-Low</label>
+              </div>
         <div v-for="product in products">
                   
 
@@ -267,7 +300,55 @@
                 // canAddToCart(product) {
                 //     return product.availableInventory > this.cartItemCount;
                 // }
+                total(){
+                        var total = 0;
+                        for (var i =0; i < this.cart.length; i++){
+                            total = total + this.cart[i].price;
+                        }
+                        return total;
+                    },
                 
+                    sortedProducts() {
+                    
+                    if (this.picked === "")
+                    {
+                        return this.products.slice(0);
+                    }    
+                    if(this.picked === "subjectAsc"){
+                      return products.sort((x, y) => x.subject > y.subject ? 1 : -1);
+                }
+
+                    if(this.picked === "subjectDesc"){
+                        return products.sort((x, y) => x.subject < y.subject ? 1 : -1);
+                    }
+
+                    if(this.picked === "priceAsc"){
+                      return products.sort((x, y) => x.price > y.price ? 1 : -1); 
+                    }
+
+                    if(this.picked === "priceDesc"){
+                        return products.sort((x, y) => x.price < y.price ? 1 : -1);
+                    }
+
+                    if(this.picked === "locationAsc"){
+                      return products.sort((x, y) => x.location > y.location ? 1 : -1); 
+                    }
+
+                    if(this.picked === "locationDesc"){
+                        return products.sort((x, y) => x.location < y.location ? 1 : -1);
+                    }
+
+                    if(this.picked === "availableInventoryAsc"){
+                      return products.sort((x, y) => x.availableInventory > y.availableInventory ? 1 : -1); 
+                    }
+
+                    if(this.picked === "availableInventoryDesc"){
+                        return products.sort((x, y) => x.availableInventory < y.availableInventory ? 1 : -1);
+                    }
+
+                    
+                },
+            },
                 
             },
         });
