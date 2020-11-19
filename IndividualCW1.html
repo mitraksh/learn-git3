@@ -91,6 +91,40 @@
     <div v-else>
         <h2>Checkout</h2>
 
+        <h2> Shopping List</h2>
+
+            <div v-if="cartItemCount>1">
+            <button v-on:click="clearCart" class="btn btn-danger">Clear Cart</button> 
+            </div>
+
+      <table class="uk-table uk-table-middle">
+        <thead>
+           <tr>
+             <th>Subject</th>
+             <th>Location</th>
+             <th>Price</th>
+           </tr>
+        </thead>
+        <tr v-for="product in cart">
+          <td>
+            <p>{{product.subject}}</p>
+          </td>
+          <td>
+           <p>{{product.location}}</p>
+          </td>
+          <td>
+            <p>£{{product.price}}</p>
+          </td>
+          <td>
+            <button class="btn btn-danger" @click="removeItem(product)">Delete</button>
+          </td>
+        </tr>
+        <hr>
+        <label class="form-control border border-info" readonly><strong>Your Total:</strong> <i>£{{total}}</i></label>
+      </table>
+      <hr>
+    <div v-else>Your Cart is Empty</div>
+
         <form>
 
 
