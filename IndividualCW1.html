@@ -28,9 +28,26 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             </div>
 
-            <button v-on:click='showCheckout' class="btn btn-outline-success my-2 my-sm-0">
-                {{cartItemCount}}
-                <span class="fas fa-shopping-cart"></span> Checkout
+            <div v-if="cartItemCount>0">
+                <div v-if="showProduct">
+                 <button v-on:click='showCheckout' class="btn btn-outline-success my-2 my-sm-0">
+                   {{cartItemCount}}
+                   <span class="fas fa-shopping-cart"></span> Checkout
+                   </button>
+               </div>
+               <div v-else>
+                   <button v-on:click='showCheckout' class="btn btn-outline-primary my-2 my-sm-0">
+                       {{cartItemCount}}
+                       <span class="fas fa-shopping-cart"></span> Lessons
+                       </button>
+               </div>
+            </div>
+               <div v-else>
+                       <button disabled="disabled" class="btn btn-disabled">
+                       {{cartItemCount}}
+                       <span class="fas fa-shopping-cart"></span> Checkout
+                   </button>
+               </div>
 
         </nav>
     <div v-if='showProduct'>
