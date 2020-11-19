@@ -60,6 +60,11 @@
         </div>
     </div>
 
+    <div v-else>
+        <h2>Checkout</h2>
+
+    </div>
+
 
 
     <script type="text/javascript">
@@ -70,15 +75,7 @@
                 products: products,
                 cart: [],
                 showProduct: true,
-                picked:'',
-                order: {
-                    fullName: '',
-                    phoneNumber: '',
-                    method: 'Home',
-                    gift: 'Send as a gift',
-                    sendGift: 'Send as a gift',
-                    dontSendGift: 'Do not send as a gift',
-                },
+               
                
                 
             },
@@ -90,6 +87,10 @@
                   product.quantity -= 1
                   this.cart.push(product);
                   // console.log('adding to cart', product.id)
+                },
+                showCheckout() {
+                    // console.log(this.showProduct);
+                    this.showProduct = this.showProduct ? false : true;
                 },
                 
                
