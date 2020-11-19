@@ -159,7 +159,7 @@
             //     this.products = allProducts
             // },
             methods: {
-              addToCart(product) {
+                addToCart(product) {
                   product.quantity -= 1
                   this.cart.push(product);
                   // console.log('adding to cart', product.id)
@@ -168,8 +168,44 @@
                     // console.log(this.showProduct);
                     this.showProduct = this.showProduct ? false : true;
                 },
+                canAddToCart(product) {
+                    return product.availableInventory > this.cartCount(product);
+                },
+                clearCart() {
+                    
+                    webstore.cart = [];
+                    this.showProduct = true;
+                     
+                 },
                 
-                
+                submitForm(order){
+                       
+                alert("Order not placed until you are redirected to the Home Screen")
+                            
+                },
+                    
+               
+                removeItem(product){
+                    this.cart.splice(this.cart.indexOf(product),1); //delete 1 element from the array at the position index
+                    this.showProduct= true; 
+                },
+                   
+
+                cartCount(id) {
+                    let count = 0;
+                    for (let i = 0; i < this.cart.length; i++) {
+                        if (this.cart[i] === id) {
+                            count++;
+                        }
+                    }
+                    return count;
+                },
+                onlyNumbers(event) {      
+                    let keyCode = event.keyCode ? event.keyCode : event.which;
+                    if (keyCode < 48 || keyCode > 57) {
+                    event.preventDefault();
+                    }
+                },
                
             },
             
