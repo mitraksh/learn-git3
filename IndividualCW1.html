@@ -18,40 +18,43 @@
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit-icons.min.js"></script>
 
 </head>
-<body>
-</header>
-<main>
-    <div id="app">
+<body class="container-fluid">
+  <div id="app">
+      <header>
+
         <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-            <h1 v-text="sitename" class="text-success"></h1>
-           
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            </div>
+          <h1 v-text="sitename" class="text-success"></h1>
+         
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          </div>
 
-            <div v-if="cartItemCount>0">
-                <div v-if="showProduct">
-                 <button v-on:click='showCheckout' class="btn btn-outline-success my-2 my-sm-0">
-                   {{cartItemCount}}
-                   <span class="fas fa-shopping-cart"></span> Checkout
-                   </button>
-               </div>
-               <div v-else>
-                   <button v-on:click='showCheckout' class="btn btn-outline-primary my-2 my-sm-0">
-                       {{cartItemCount}}
-                       <span class="fas fa-shopping-cart"></span> Lessons
-                       </button>
-               </div>
+         <div v-if="cartItemCount>0">
+             <div v-if="showProduct">
+              <button v-on:click='showCheckout' class="btn btn-outline-success my-2 my-sm-0">
+                {{cartItemCount}}
+                <span class="fas fa-shopping-cart"></span> Checkout
+                </button>
             </div>
-               <div v-else>
-                       <button disabled="disabled" class="btn btn-disabled">
-                       {{cartItemCount}}
-                       <span class="fas fa-shopping-cart"></span> Checkout
-                   </button>
-               </div>
-
+            <div v-else>
+                <button v-on:click='showCheckout' class="btn btn-outline-primary my-2 my-sm-0">
+                    {{cartItemCount}}
+                    <span class="fas fa-shopping-cart"></span> Lessons
+                    </button>
+            </div>
+         </div>
+            <div v-else>
+                    <button disabled="disabled" class="btn btn-disabled">
+                    {{cartItemCount}}
+                    <span class="fas fa-shopping-cart"></span> Checkout
+                </button>
+            </div>
         </nav>
-    <div v-if='showProduct'>
-        <h3 class="text-info">Filter</h3>
+         
+        
+      </header>
+      <main>
+          <div v-if='showProduct'>
+            <h3 class="text-info">Filter</h3>
             <div class="form-check">
             <input class="form-check-input" type="radio" value="subjectAsc" name="subjectAsc" v-model="picked">
             <label for="Radio">Sort A-Z Subject</label>
@@ -84,47 +87,52 @@
               <input class="form-check-input" type="radio" value="availableInventoryDesc" name="availableInventoryDesc" v-model="picked">
               <label for="spacesRadio">Sort Space By High-Low</label>
               </div>
-        <div v-for="product in products">
+
+              <div v-for="product in sortedProducts">
                   
 
 
-            <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
-              <div class="uk-card-media-left uk-cover-container">
-                  <img v-bind:src="product.image" alt="" uk-cover>
-                  <canvas width="600" height="400"></canvas>
-              </div>
-              <div>
-                  <div class="uk-card-body">
-                    <h3 class="uk-card-title" v-text="product.subject"></h3>
-                    <p class="card-text">Location: {{product.location}}</p>
-                    <p class="card-text">Price: £{{product.price}}</p>
-                    <p class="card-text">Available Seats: {{product.availableInventory - cartCount(product)}}</p>
+                <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
+                  <div class="uk-card-media-left uk-cover-container">
+                      <img v-bind:src="product.image" alt="" uk-cover>
+                      <canvas width="600" height="400"></canvas>
+                  </div>
+                  <div>
+                      <div class="uk-card-body">
+                        <h3 class="uk-card-title" v-text="product.subject"></h3>
+                        <p class="card-text">Location: {{product.location}}</p>
+                        <p class="card-text">Price: £{{product.price}}</p>
+                        <p class="card-text">Available Seats: {{product.availableInventory - cartCount(product)}}</p>
 
-                    <button v-on:click='addToCart(product)' v-if='canAddToCart(product)' class="btn btn-primary">Add to cart</button>
+                        <button v-on:click='addToCart(product)' v-if='canAddToCart(product)' class="btn btn-primary">Add to cart</button>
 
-                    <button disabled="disabled" v-else class="btn btn-disabled">Add to cart</button>
-          
-                    <span v-if='product.availableInventory === cartCount(product)'>All out!</span>
-                    <span v-else-if="product.availableInventory - cartCount(product) < 5">
-                                Only {{product.availableInventory - cartCount(product)}} left!
-                    </span>
-                    <span v-else>Buy now!</span>
-                    <div>
-                      <span v-for='n in product.rating'>★</span>
-                      <span v-for='n in 5-product.rating'>☆</span>
-                      </div>
+                        <button disabled="disabled" v-else class="btn btn-disabled">Add to cart</button>
+              
+                        <span v-if='product.availableInventory === cartCount(product)'>All out!</span>
+                        <span v-else-if="product.availableInventory - cartCount(product) < 5">
+                                    Only {{product.availableInventory - cartCount(product)}} left!
+                        </span>
+                        <span v-else>Buy now!</span>
+                        <div>
+                          <span v-for='n in product.rating'>★</span>
+                          <span v-for='n in 5-product.rating'>☆</span>
+                          </div>
 
-   
-                      </div>
+       
+                          </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div v-else>
-        <h2>Checkout</h2>
+                  
 
-        <h2> Shopping List</h2>
+              </div>
+          </div>
+          
+        
+          <div v-else>
+              <h2>Checkout</h2>
+
+            <h2> Shopping List</h2>
 
             <div v-if="cartItemCount>1">
             <button v-on:click="clearCart" class="btn btn-danger">Clear Cart</button> 
@@ -158,69 +166,70 @@
       <hr>
     <div v-else>Your Cart is Empty</div>
 
-        <form>
-
-
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text border border-primary">Full Name</span>
-              </div>
-              <input v-model.trim="order.fullName"  type="text" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123 || event.charCode == 32)" placeholder="Your Full Name" class="form-control border border-info" required minlength="3" maxlength="30">              </div>
-
             
-             
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text border border-info">Phone Number:</span>
-              </div>
-              <input id="mobile" v-model.number="order.phoneNumber" pattern="^\d{10}$" title="Only 10 Digits are allowed" @keypress="onlyNumbers" type="tel" placeholder="Your Phone Number (Only 10 digits are allowed)" class="form-control border border-success" required>
-              <span class="input-group-text border border-info">Only 10 digits are allowed</span>
-            </div>   
+<form>
 
 
-            
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                  <span class="input-group-text border border-success"> <input type="checkbox" id="gift" value="true" v-model="order.gift" v-bind:true-value="order.sendGift"
-                  v-bind:false-value="order.dontSendGift"> </span>
-                  <span class="input-group-text border border-primary" for="gift">Ship As Gift?</span>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text border border-primary">Full Name</span>
                 </div>
-              </div>
-            
-           
-            
-          
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text border border-info"> <input type="radio" id="home" value="Home" v-model="order.method" > </span>
-                <span class="input-group-text border border-primary">Home</span>
-                <span class="input-group-text border border-info"> <input type="radio" id="business" value="Business" v-model="order.method"> </span>
-                <span class="input-group-text border border-primary"> Business</span>
-              </div>
+                <input v-model.trim="order.fullName"  type="text" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123 || event.charCode == 32)" placeholder="Your Full Name" class="form-control border border-info" required minlength="3" maxlength="30">              </div>
+
+              
+               
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text border border-info">Phone Number:</span>
+                </div>
+                <input id="mobile" v-model.number="order.phoneNumber" pattern="^\d{10}$" title="Only 10 Digits are allowed" @keypress="onlyNumbers" type="tel" placeholder="Your Phone Number (Only 10 digits are allowed)" class="form-control border border-success" required>
+                <span class="input-group-text border border-info">Only 10 digits are allowed</span>
+              </div>   
+
+
+              
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text border border-success"> <input type="checkbox" id="gift" value="true" v-model="order.gift" v-bind:true-value="order.sendGift"
+                    v-bind:false-value="order.dontSendGift"> </span>
+                    <span class="input-group-text border border-primary" for="gift">Ship As Gift?</span>
+                  </div>
+                </div>
+              
              
-            </div>
-
-
-          <h2>Order Information</h2>
-          <p class="input-group-text border border-primary">Full Name: {{order.fullName}}</p>
-          <p class="input-group-text border border-info">Phone Number: {{order.phoneNumber}}</p>
-          <p class="input-group-text border border-success">Gift? {{order.gift}}</p>
-          <p class="input-group-text border border-warning">Method: {{order.method}}</p>
-          <p class="input-group-text border border-primary">Your Total: £{{total}}</p> </br>
-
-          
-           
-          <button class="btn btn-success" v-if="order.fulName!= '' && order.phoneNumber!= '' " type="submit" v-on:click="submitForm(order)">Place Order</button>
+              
             
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text border border-info"> <input type="radio" id="home" value="Home" v-model="order.method" > </span>
+                  <span class="input-group-text border border-primary">Home</span>
+                  <span class="input-group-text border border-info"> <input type="radio" id="business" value="Business" v-model="order.method"> </span>
+                  <span class="input-group-text border border-primary"> Business</span>
+                </div>
+               
+              </div>
+
+
+            <h2>Order Information</h2>
+            <p class="input-group-text border border-primary">Full Name: {{order.fullName}}</p>
+            <p class="input-group-text border border-info">Phone Number: {{order.phoneNumber}}</p>
+            <p class="input-group-text border border-success">Gift? {{order.gift}}</p>
+            <p class="input-group-text border border-warning">Method: {{order.method}}</p>
+            <p class="input-group-text border border-primary">Your Total: £{{total}}</p> </br>
+
             
-      </form>
+             
+            <button class="btn btn-success" v-if="order.fulName!= '' && order.phoneNumber!= '' " type="submit" v-on:click="submitForm(order)">Place Order</button>
+              
+              
+        </form>
 
- 
-    </div>
-
-
-
-    <script type="text/javascript">
+      </div>
+       
+      </main>
+  </div>
+    
+<script type="text/javascript">
         var webstore = new Vue({
             el: '#app',
             data: {
@@ -228,6 +237,7 @@
                 products: products,
                 cart: [],
                 showProduct: true,
+                picked:'',
                 order: {
                     fullName: '',
                     phoneNumber: '',
@@ -243,7 +253,7 @@
             //     this.products = allProducts
             // },
             methods: {
-                addToCart(product) {
+              addToCart(product) {
                   product.quantity -= 1
                   this.cart.push(product);
                   // console.log('adding to cart', product.id)
@@ -300,6 +310,7 @@
                 // canAddToCart(product) {
                 //     return product.availableInventory > this.cartItemCount;
                 // }
+                
                 total(){
                         var total = 0;
                         for (var i =0; i < this.cart.length; i++){
@@ -347,12 +358,10 @@
                     }
 
                     
-                },
-            },
-                
+                }
             },
         });
     </script>
- 
+
 </body>
 </html>
